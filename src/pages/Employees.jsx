@@ -26,7 +26,7 @@ function Employees() {
   const [editEmployee, setEditEmployee] = useState(null);
 
   const fetchEmployees = () => {
-    axios.get('http://localhost:8080/api/employees')
+    axios.get('https://rividco.vercel.app/api/employees')
       .then(response => {
         setEmployees(response.data);
       })
@@ -63,7 +63,7 @@ function Employees() {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:8080/api/employees/${id}`)
+        axios.delete(`https://rividco.vercel.app/api/employees/${id}`)
           .then(() => {
             fetchEmployees();
             Swal.fire(
@@ -171,7 +171,7 @@ function Employees() {
                 <TableCell>{employee.jobTitle}</TableCell>
                 <TableCell>{employee.description}</TableCell>
                 <TableCell>
-                  <img src={`data:image/png;base64,${employee.image}`} alt={employee.name} style={{ width: '100px' }} />
+                  <img src={employee.image} alt={employee.name} style={{ width: '100px' }} />
                 </TableCell>
                 <TableCell>
                   {employee.socialMedia.map((social, idx) => (
