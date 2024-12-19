@@ -15,7 +15,7 @@ const AddServiceForm = ({ onServiceAdded, onServiceUpdated, editService }) => {
   const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const serviceCategories = ['Mini Hydro', 'Rooftop Solar', 'Ground-Mounted Solar', 'Solar Battery Storage','Energy Efficiency Consulting'];
+  const serviceCategories = ['Mini Hydro', 'Rooftop Solar', 'Ground-Mounted Solar', 'Solar Battery Storage',];
 
   useEffect(() => {
     if (editService) {
