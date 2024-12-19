@@ -171,7 +171,7 @@ function Employees() {
                 <TableCell>{employee.jobTitle}</TableCell>
                 <TableCell>{employee.description}</TableCell>
                 <TableCell>
-                  <img src={`data:image/png;base64,${employee.image}`} alt={employee.name} style={{ width: '100px' }} />
+                  <img src={employee.image} alt={employee.name} style={{ width: '100px' }} />
                 </TableCell>
                 <TableCell>
                   {employee.socialMedia.map((social, idx) => (

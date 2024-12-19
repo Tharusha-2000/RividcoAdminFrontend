@@ -97,7 +97,8 @@ function Services() {
   // Filter services based on the search term
   const filteredServices = services.filter(service =>
     service.service.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    service.description.toLowerCase().includes(searchTerm.toLowerCase())
+    service.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    service.serviceCategory.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -156,6 +157,7 @@ function Services() {
               <TableCell>#</TableCell>
               <TableCell>Service</TableCell>
               <TableCell>Description</TableCell>
+              <TableCell>Category</TableCell>
               <TableCell>Image</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
@@ -166,8 +168,9 @@ function Services() {
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{service.service}</TableCell>
                 <TableCell>{service.description}</TableCell>
+                <TableCell>{service.serviceCategory}</TableCell>
                 <TableCell>
-                  <img src={`data:image/png;base64,${service.image}`} alt={service.service} style={{ width: '100px' }} />
+                  <img src={service.image} alt={service.service} style={{ width: '100px' }} />
                 </TableCell>
                 <TableCell>
                   <Button variant="contained" color="primary" onClick={() => handleClickOpen(service)} sx={{ mr: 1 }}>
