@@ -26,7 +26,7 @@ function Projects() {
   const [editProject, setEditProject] = useState(null);
 
   const fetchProjects = () => {
-    axios.get('http://localhost:8080/api/projects')
+    axios.get('https://rividco.vercel.app/api/projects')
       .then(response => {
         setProjects(response.data);
       })
@@ -63,7 +63,7 @@ function Projects() {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:8080/api/projects/${id}`)
+        axios.delete(`https://rividco.vercel.app/api/projects/${id}`)
           .then(() => {
             fetchProjects();
             Swal.fire(

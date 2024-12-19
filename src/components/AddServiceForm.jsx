@@ -85,7 +85,7 @@ const AddServiceForm = ({ onServiceAdded, onServiceUpdated, editService }) => {
       };
 
       if (editService) {
-        axios.put(`http://localhost:8080/api/services/${editService._id}`, newService)
+        axios.put(`https://rividco.vercel.app/api/services/${editService._id}`, newService)
           .then(response => {
             onServiceUpdated(response.data);
             Swal.fire({
@@ -103,7 +103,7 @@ const AddServiceForm = ({ onServiceAdded, onServiceUpdated, editService }) => {
             });
           });
       } else {
-        axios.post('http://localhost:8080/api/services', newService)
+        axios.post('https://rividco.vercel.app/api/services', newService)
           .then(response => {
             onServiceAdded(response.data);
             Swal.fire({

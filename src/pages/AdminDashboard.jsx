@@ -52,7 +52,7 @@ const AdminDashboard = () => {
 
   const fetchProjects = () => {
     axios
-      .get('http://localhost:8080/api/projects')
+      .get('https://rividco.vercel.app/api/projects')
       .then((response) => {
         setProjects(response.data.length ? response.data : getDummyProjects());
       })
@@ -63,7 +63,7 @@ const AdminDashboard = () => {
 
   const fetchServices = () => {
     axios
-      .get('http://localhost:8080/api/services')
+      .get('https://rividco.vercel.app/api/services')
       .then((response) => {
         setServices(response.data.length ? response.data : getDummyServices());
       })
@@ -74,7 +74,7 @@ const AdminDashboard = () => {
 
   const fetchEmployees = () => {
     axios
-      .get('http://localhost:8080/api/employees')
+      .get('https://rividco.vercel.app/api/employees')
       .then((response) => {
         setEmployees(response.data.length ? response.data : getDummyEmployees());
       })

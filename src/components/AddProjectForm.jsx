@@ -78,7 +78,7 @@ const AddProjectForm = ({ onProjectAdded, onProjectUpdated, editProject }) => {
       };
 
       if (editProject) {
-        axios.put(`http://localhost:8080/api/projects/${editProject._id}`, newProject)
+        axios.put(`https://rividco.vercel.app/api/projects/${editProject._id}`, newProject)
           .then(response => {
             onProjectUpdated(response.data);
             Swal.fire({
@@ -96,7 +96,7 @@ const AddProjectForm = ({ onProjectAdded, onProjectUpdated, editProject }) => {
             });
           });
       } else {
-        axios.post('http://localhost:8080/api/projects', newProject)
+        axios.post('https://rividco.vercel.app/api/projects', newProject)
           .then(response => {
             onProjectAdded(response.data);
             Swal.fire({
