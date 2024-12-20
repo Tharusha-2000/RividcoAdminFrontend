@@ -1,26 +1,34 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import Badge from '@mui/material/Badge';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 import SettingsIcon from '@mui/icons-material/Settings';
+import LogoutIcon from '@mui/icons-material/Logout'; // Import the Logout icon
 import Box from '@mui/material/Box';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 import Logo from '../assets/logo.png'; // Replace with your logo path
 
 const Header = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
+  const navigate = useNavigate();
 
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleLogout = () => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will be logged out!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, log out!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate('/login'); // Redirect to the login page
+      }
+    });
   };
 
   return (
@@ -46,30 +54,16 @@ const Header = () => {
           <SettingsIcon />
         </IconButton>
 
-        {/* User Profile Menu */}
+        {/* Logout */}
         <IconButton
           size="large"
           edge="end"
-          aria-label="account of current user"
-          aria-controls="menu-appbar"
-          aria-haspopup="true"
-          onClick={handleMenu}
+          aria-label="logout"
           color="inherit"
+          onClick={handleLogout}
         >
-          <AccountCircle />
+          <LogoutIcon />
         </IconButton>
-        <Menu
-          id="menu-appbar"
-          anchorEl={anchorEl}
-          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-          keepMounted
-          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          <MenuItem onClick={handleClose}>Profile</MenuItem>
-          <MenuItem onClick={handleClose}>Logout</MenuItem>
-        </Menu>
       </Toolbar>
     </AppBar>
   );
