@@ -27,7 +27,7 @@ const Sidebar = () => {
         <img src={logo} alt="Logo" style={{ width: '80%' }} />
       </Box>
       <List>
-        <ListItem button component={Link} to="/" sx={{ '&:hover': { backgroundColor: '#e0e0e0' }, color: '#333' }}>
+        <ListItem button component={Link} to="/dashboard" sx={{ '&:hover': { backgroundColor: '#e0e0e0' }, color: '#333' }}>
           <ListItemIcon sx={{ color: '#333' }}>
             <DashboardIcon />
           </ListItemIcon>
