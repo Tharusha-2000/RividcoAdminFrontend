@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Box, Typography, Paper, IconButton, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
+import { TextField, Button, Box, Typography, Paper, IconButton, MenuItem, Select, FormControl, InputLabel, CircularProgress } from '@mui/material';
 import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { v4 as uuidv4 } from 'uuid';
+import { storage } from '../firebase';
+import config from '../config'; // Import the configuration file
+
 
 const AddEmployeeForm = ({ onEmployeeAdded, onEmployeeUpdated, editEmployee }) => {
   const [name, setName] = useState('');
   const [jobTitle, setJobTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState(null);
+  const [imageUrl, setImageUrl] = useState('');
   const [socialMedia, setSocialMedia] = useState([{ platform: '', link: '' }]);
+  const [loading, setLoading] = useState(false);
 
   const socialMediaPlatforms = ['LinkedIn', 'Twitter', 'Facebook', 'Instagram', 'GitHub'];
 
@@ -19,16 +26,19 @@ const AddEmployeeForm = ({ onEmployeeAdded, onEmployeeUpdated, editEmployee }) =
       setName(editEmployee.name);
       setJobTitle(editEmployee.jobTitle);
       setDescription(editEmployee.description);
-      setImage(editEmployee.image);
+      setImageUrl(editEmployee.image);
       setSocialMedia(editEmployee.socialMedia);
     }
   }, [editEmployee]);
 
   const onDrop = (acceptedFiles) => {
     const file = acceptedFiles[0];
+    setImage(file);
+
+    // Display the selected image
     const reader = new FileReader();
     reader.onloadend = () => {
-      setImage(reader.result.split(',')[1]); // Remove the base64 prefix
+      setImageUrl(reader.result);
     };
     reader.readAsDataURL(file);
   };
@@ -49,37 +59,74 @@ const AddEmployeeForm = ({ onEmployeeAdded, onEmployeeUpdated, editEmployee }) =
     setSocialMedia(socialMedia.filter((_, i) => i !== index));
   };
 
-  const handleSubmit = (e) => {
+  const uploadImage = () => {
+    return new Promise((resolve, reject) => {
+      if (!image) {
+        resolve(imageUrl); // If no new image is selected, use the existing image URL
+        return;
+      }
+
+      const imagePath = `employees/${image.name + uuidv4()}`;
+      const imageRef = ref(storage, imagePath);
+      const uploadTask = uploadBytesResumable(imageRef, image);
+
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+          console.log(`Upload is ${progress}% done`);
+        },
+        (error) => {
+          console.error('Error while uploading file', error);
+          reject(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            resolve(downloadURL);
+          });
+        }
+      );
+    });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    const newEmployee = {
-      name,
-      jobTitle,
-      description,
-      image,
-      socialMedia,
-    };
+    try {
+      const imageUrl = await uploadImage();
 
-    if (editEmployee) {
-      axios.put(`http://localhost:8080/api/employees/${editEmployee._id}`, newEmployee)
-        .then(response => {
-          onEmployeeUpdated(response.data);
-          Swal.fire({
-            icon: 'success',
-            title: 'Employee Updated',
-            text: 'The employee has been updated successfully!',
+      const newEmployee = {
+        name,
+        jobTitle,
+        description,
+        image: imageUrl,
+        socialMedia,
+      };
+
+      if (editEmployee) {
+
+        axios.put(`${config.baseUrl}/api/employees/${editEmployee._id}`, newEmployee)
+
+          .then(response => {
+            onEmployeeUpdated(response.data);
+            Swal.fire({
+              icon: 'success',
+              title: 'Employee Updated',
+              text: 'The employee has been updated successfully!',
+            });
+          })
+          .catch(error => {
+            console.error('There was an error updating the employee!', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'There was an error updating the employee!',
+            });
           });
-        })
-        .catch(error => {
-          console.error('There was an error updating the employee!', error);
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'There was an error updating the employee!',
-          });
-        });
-    } else {
-      axios.post('http://localhost:8080/api/employees', newEmployee)
+      } else {
+
+        axios.post(`${config.baseUrl}/api/employees`, newEmployee)
         .then(response => {
           onEmployeeAdded(response.data);
           Swal.fire({
@@ -87,15 +134,26 @@ const AddEmployeeForm = ({ onEmployeeAdded, onEmployeeUpdated, editEmployee }) =
             title: 'Employee Added',
             text: 'The employee has been added successfully!',
           });
-        })
-        .catch(error => {
-          console.error('There was an error adding the employee!', error);
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'There was an error adding the employee!',
+
+          })
+          .catch(error => {
+            console.error('There was an error adding the employee!', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'There was an error adding the employee!',
+            });
           });
-        });
+      }
+    } catch (error) {
+      console.error('Error while uploading image', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'There was an error uploading the image!',
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -149,8 +207,8 @@ const AddEmployeeForm = ({ onEmployeeAdded, onEmployeeUpdated, editEmployee }) =
           }}
         >
           <input {...getInputProps()} />
-          {image ? (
-            <img src={`data:image/png;base64,${image}`} alt="Uploaded" style={{ maxWidth: '100%', maxHeight: '100%' }} />
+          {imageUrl ? (
+            <img src={imageUrl} alt="Uploaded" style={{ maxWidth: '100%', maxHeight: '100%' }} />
           ) : (
             <Typography variant="body2" color="textSecondary">
               {isDragActive ? 'Drop the image here ...' : 'Drag \'n\' drop an image here, or click to select an image'}
@@ -193,8 +251,8 @@ const AddEmployeeForm = ({ onEmployeeAdded, onEmployeeUpdated, editEmployee }) =
         <Button variant="contained" color="primary" onClick={handleAddSocialMedia} sx={{ mb: 2 }}>
           + Add Social Media
         </Button>
-        <Button type="submit" variant="contained" color="primary" sx={{ mt: 3, width: '100%' }}>
-          {editEmployee ? 'Update Employee' : 'Add Employee'}
+        <Button type="submit" variant="contained" color="primary" sx={{ mt: 3, width: '100%' }} disabled={loading}>
+          {loading ? <CircularProgress size={24} /> : editEmployee ? 'Update Employee' : 'Add Employee'}
         </Button>
       </Box>
     </Paper>

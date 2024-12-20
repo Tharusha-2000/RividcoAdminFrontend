@@ -18,6 +18,8 @@ import AddProjectForm from '../components/AddProjectForm.jsx';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import Box from '@mui/material/Box';
+import config from '../config'; // Import the configuration file
+
 
 function Projects() {
   const [projects, setProjects] = useState([]);
@@ -26,7 +28,9 @@ function Projects() {
   const [editProject, setEditProject] = useState(null);
 
   const fetchProjects = () => {
-    axios.get('http://localhost:8080/api/projects')
+
+    axios.get(`${config.baseUrl}/api/projects`)
+
       .then(response => {
         setProjects(response.data);
       })
@@ -63,7 +67,9 @@ function Projects() {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:8080/api/projects/${id}`)
+
+        axios.delete(`${config.baseUrl}/api/projects/${id}`)
+
           .then(() => {
             fetchProjects();
             Swal.fire(
@@ -97,7 +103,8 @@ function Projects() {
   // Filter projects based on the search term
   const filteredProjects = projects.filter(project =>
     project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    project.description.toLowerCase().includes(searchTerm.toLowerCase())
+    project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    project.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -156,6 +163,7 @@ function Projects() {
               <TableCell>#</TableCell>
               <TableCell>Title</TableCell>
               <TableCell>Description</TableCell>
+              <TableCell>Category</TableCell>
               <TableCell>Images</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
@@ -166,9 +174,10 @@ function Projects() {
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{project.title}</TableCell>
                 <TableCell>{project.description}</TableCell>
+                <TableCell>{project.category}</TableCell>
                 <TableCell>
                   {project.images.map((image, idx) => (
-                    <img key={idx} src={`data:image/png;base64,${image}`} alt={`Project ${idx}`} style={{ width: '100px', marginRight: '10px' }} />
+                    <img key={idx} src={image} alt={`Project ${idx}`} style={{ width: '100px', marginRight: '10px' }} />
                   ))}
                 </TableCell>
                 <TableCell>

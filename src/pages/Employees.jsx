@@ -18,6 +18,8 @@ import AddEmployeeForm from '../components/AddEmployeeForm.jsx';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import Box from '@mui/material/Box';
+import config from '../config'; // Import the configuration file
+
 
 function Employees() {
   const [employees, setEmployees] = useState([]);
@@ -26,7 +28,9 @@ function Employees() {
   const [editEmployee, setEditEmployee] = useState(null);
 
   const fetchEmployees = () => {
-    axios.get('http://localhost:8080/api/employees')
+
+    axios.get(`${config.baseUrl}/api/employees`)
+
       .then(response => {
         setEmployees(response.data);
       })
@@ -63,7 +67,9 @@ function Employees() {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:8080/api/employees/${id}`)
+
+        axios.delete(`${config.baseUrl}/api/employees/${id}`)
+
           .then(() => {
             fetchEmployees();
             Swal.fire(
@@ -171,7 +177,7 @@ function Employees() {
                 <TableCell>{employee.jobTitle}</TableCell>
                 <TableCell>{employee.description}</TableCell>
                 <TableCell>
-                  <img src={`data:image/png;base64,${employee.image}`} alt={employee.name} style={{ width: '100px' }} />
+                  <img src={employee.image} alt={employee.name} style={{ width: '100px' }} />
                 </TableCell>
                 <TableCell>
                   {employee.socialMedia.map((social, idx) => (
