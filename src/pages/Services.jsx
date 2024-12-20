@@ -18,6 +18,7 @@ import AddServiceForm from '../components/AddServiceForm.jsx';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import Box from '@mui/material/Box';
+import config from '../config'; // Import the configuration file
 
 function Services() {
   const [services, setServices] = useState([]);
@@ -26,7 +27,9 @@ function Services() {
   const [editService, setEditService] = useState(null);
 
   const fetchServices = () => {
-    axios.get('https://rivid-six.vercel.app/api/services')
+
+    axios.get(`${config.baseUrl}/api/services`)
+
       .then(response => {
         setServices(response.data);
       })
@@ -63,7 +66,9 @@ function Services() {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`https://rivid-six.vercel.app/api/services/${id}`)
+
+        axios.delete(`${config.baseUrl}/api/services/${id}`)
+
           .then(() => {
             fetchServices();
             Swal.fire(

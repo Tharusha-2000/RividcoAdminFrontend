@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
 import { storage } from '../firebase';
+import config from '../config'; // Import the configuration file
 
 const AddServiceForm = ({ onServiceAdded, onServiceUpdated, editService }) => {
   const [service, setService] = useState('');
@@ -14,6 +15,7 @@ const AddServiceForm = ({ onServiceAdded, onServiceUpdated, editService }) => {
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(false);
+  
 
   const serviceCategories = ['Mini Hydro', 'Rooftop Solar', 'Ground-Mounted Solar', 'Solar Battery Storage',];
 
@@ -85,14 +87,16 @@ const AddServiceForm = ({ onServiceAdded, onServiceUpdated, editService }) => {
       };
 
       if (editService) {
-        axios.put(`https://rivid-six.vercel.app/api/services/${editService._id}`, newService)
-          .then(response => {
-            onServiceUpdated(response.data);
-            Swal.fire({
-              icon: 'success',
-              title: 'Service Updated',
-              text: 'The service has been updated successfully!',
-            });
+
+        axios.put(`${config.baseUrl}/api/services/${editService._id}`, newService)
+        .then(response => {
+          onServiceUpdated(response.data);
+          Swal.fire({
+            icon: 'success',
+            title: 'Service Updated',
+            text: 'The service has been updated successfully!',
+          });
+
           })
           .catch(error => {
             console.error('There was an error updating the service!', error);
@@ -103,14 +107,16 @@ const AddServiceForm = ({ onServiceAdded, onServiceUpdated, editService }) => {
             });
           });
       } else {
-        axios.post('https://rivid-six.vercel.app/api/services', newService)
-          .then(response => {
-            onServiceAdded(response.data);
-            Swal.fire({
-              icon: 'success',
-              title: 'Service Added',
-              text: 'The service has been added successfully!',
-            });
+
+        axios.post(`${config.baseUrl}/api/services`, newService)
+        .then(response => {
+          onServiceAdded(response.data);
+          Swal.fire({
+            icon: 'success',
+            title: 'Service Added',
+            text: 'The service has been added successfully!',
+          });
+
           })
           .catch(error => {
             console.error('There was an error adding the service!', error);
