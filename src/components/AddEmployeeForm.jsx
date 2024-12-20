@@ -105,7 +105,9 @@ const AddEmployeeForm = ({ onEmployeeAdded, onEmployeeUpdated, editEmployee }) =
       };
 
       if (editEmployee) {
+
         axios.put(`${config.baseUrl}/api/employees/${editEmployee._id}`, newEmployee)
+
           .then(response => {
             onEmployeeUpdated(response.data);
             Swal.fire({
@@ -123,6 +125,7 @@ const AddEmployeeForm = ({ onEmployeeAdded, onEmployeeUpdated, editEmployee }) =
             });
           });
       } else {
+
         axios.post(`${config.baseUrl}/api/employees`, newEmployee)
         .then(response => {
           onEmployeeAdded(response.data);
@@ -131,6 +134,7 @@ const AddEmployeeForm = ({ onEmployeeAdded, onEmployeeUpdated, editEmployee }) =
             title: 'Employee Added',
             text: 'The employee has been added successfully!',
           });
+
           })
           .catch(error => {
             console.error('There was an error adding the employee!', error);

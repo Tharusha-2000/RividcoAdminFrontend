@@ -87,6 +87,7 @@ const AddServiceForm = ({ onServiceAdded, onServiceUpdated, editService }) => {
       };
 
       if (editService) {
+
         axios.put(`${config.baseUrl}/api/services/${editService._id}`, newService)
         .then(response => {
           onServiceUpdated(response.data);
@@ -95,6 +96,7 @@ const AddServiceForm = ({ onServiceAdded, onServiceUpdated, editService }) => {
             title: 'Service Updated',
             text: 'The service has been updated successfully!',
           });
+
           })
           .catch(error => {
             console.error('There was an error updating the service!', error);
@@ -105,6 +107,7 @@ const AddServiceForm = ({ onServiceAdded, onServiceUpdated, editService }) => {
             });
           });
       } else {
+
         axios.post(`${config.baseUrl}/api/services`, newService)
         .then(response => {
           onServiceAdded(response.data);
@@ -113,6 +116,7 @@ const AddServiceForm = ({ onServiceAdded, onServiceUpdated, editService }) => {
             title: 'Service Added',
             text: 'The service has been added successfully!',
           });
+
           })
           .catch(error => {
             console.error('There was an error adding the service!', error);

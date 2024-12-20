@@ -66,7 +66,9 @@ const AdminDashboard = () => {
 
   const fetchServices = () => {
     axios
+
       .get(`${config.baseUrl}/api/services`)
+
       .then((response) => {
         setServices(response.data.length ? response.data : getDummyServices());
       })
@@ -77,7 +79,9 @@ const AdminDashboard = () => {
 
   const fetchEmployees = () => {
     axios
+
       .get(`${config.baseUrl}/api/employees`)
+
       .then((response) => {
         setEmployees(response.data.length ? response.data : getDummyEmployees());
       })

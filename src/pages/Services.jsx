@@ -27,7 +27,9 @@ function Services() {
   const [editService, setEditService] = useState(null);
 
   const fetchServices = () => {
+
     axios.get(`${config.baseUrl}/api/services`)
+
       .then(response => {
         setServices(response.data);
       })
@@ -64,7 +66,9 @@ function Services() {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
+
         axios.delete(`${config.baseUrl}/api/services/${id}`)
+
           .then(() => {
             fetchServices();
             Swal.fire(

@@ -28,7 +28,9 @@ function Employees() {
   const [editEmployee, setEditEmployee] = useState(null);
 
   const fetchEmployees = () => {
+
     axios.get(`${config.baseUrl}/api/employees`)
+
       .then(response => {
         setEmployees(response.data);
       })
@@ -65,7 +67,9 @@ function Employees() {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
+
         axios.delete(`${config.baseUrl}/api/employees/${id}`)
+
           .then(() => {
             fetchEmployees();
             Swal.fire(

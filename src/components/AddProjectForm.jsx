@@ -80,7 +80,9 @@ const AddProjectForm = ({ onProjectAdded, onProjectUpdated, editProject }) => {
       };
   
       if (editProject) {
+
         axios.put(`${config.baseUrl}/api/projects/${editProject._id}`, newProject)
+
           .then(response => {
             onProjectUpdated(response.data);
             Swal.fire({
@@ -98,7 +100,9 @@ const AddProjectForm = ({ onProjectAdded, onProjectUpdated, editProject }) => {
             });
           });
       } else {
+
         axios.post(`${config.baseUrl}/api/projects`, newProject)
+
           .then(response => {
             onProjectAdded(response.data);
             Swal.fire({

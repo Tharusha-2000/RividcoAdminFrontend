@@ -28,7 +28,9 @@ function Projects() {
   const [editProject, setEditProject] = useState(null);
 
   const fetchProjects = () => {
+
     axios.get(`${config.baseUrl}/api/projects`)
+
       .then(response => {
         setProjects(response.data);
       })
@@ -65,7 +67,9 @@ function Projects() {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
+
         axios.delete(`${config.baseUrl}/api/projects/${id}`)
+
           .then(() => {
             fetchProjects();
             Swal.fire(

@@ -59,7 +59,9 @@ const Login = () => {
     setLoading(true);
 
     try {
+
       const response = await axios.post(`${config.baseUrl}/api/login`, { email, password });
+
 
       if (response.data.success) {
         Swal.fire({
