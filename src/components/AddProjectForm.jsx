@@ -7,6 +7,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
 import { storage } from '../firebase';
+import config from '../config'; // Import the configuration file
+
 
 const AddProjectForm = ({ onProjectAdded, onProjectUpdated, editProject }) => {
   const [title, setTitle] = useState('');
@@ -64,21 +66,21 @@ const AddProjectForm = ({ onProjectAdded, onProjectUpdated, editProject }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+  
     try {
       const uploadedImages = await Promise.all(
         images.map((image) => (image.file ? uploadImage(image.file) : image.url))
       );
-
+  
       const newProject = {
         title,
         description,
         category,
         images: uploadedImages,
       };
-
+  
       if (editProject) {
-        axios.put(`https://rivid-six.vercel.app/api/projects/${editProject._id}`, newProject)
+        axios.put(`${config.baseUrl}/api/projects/${editProject._id}`, newProject)
           .then(response => {
             onProjectUpdated(response.data);
             Swal.fire({
@@ -96,7 +98,7 @@ const AddProjectForm = ({ onProjectAdded, onProjectUpdated, editProject }) => {
             });
           });
       } else {
-        axios.post('https://rivid-six.vercel.app/api/projects', newProject)
+        axios.post(`${config.baseUrl}/api/projects`, newProject)
           .then(response => {
             onProjectAdded(response.data);
             Swal.fire({

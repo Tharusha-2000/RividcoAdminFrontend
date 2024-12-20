@@ -10,6 +10,8 @@ import { Bar, Doughnut, Line } from 'react-chartjs-2';
 import axios from 'axios';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import config from '../config'; // Import the configuration file
+
 
 ChartJS.register(
   CategoryScale,
@@ -52,7 +54,7 @@ const AdminDashboard = () => {
 
   const fetchProjects = () => {
     axios
-      .get('https://rividco.vercel.app/api/projects')
+      .get(`${config.baseUrl}/api/projects`)
       .then((response) => {
         setProjects(response.data.length ? response.data : getDummyProjects());
       })
@@ -61,9 +63,10 @@ const AdminDashboard = () => {
       });
   };
 
+
   const fetchServices = () => {
     axios
-      .get('https://rivid-six.vercel.app/api/services')
+      .get(`${config.baseUrl}/api/services`)
       .then((response) => {
         setServices(response.data.length ? response.data : getDummyServices());
       })
@@ -74,7 +77,7 @@ const AdminDashboard = () => {
 
   const fetchEmployees = () => {
     axios
-      .get('https://rivid-six.vercel.app/api/employees')
+      .get(`${config.baseUrl}/api/employees`)
       .then((response) => {
         setEmployees(response.data.length ? response.data : getDummyEmployees());
       })
