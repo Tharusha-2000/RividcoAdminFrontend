@@ -57,7 +57,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:8080/api/login', { email, password });
+      const response = await axios.post('https://rivid-six.vercel.app/api/login', { email, password });
 
       if (response.data.success) {
         Swal.fire({

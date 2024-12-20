@@ -26,7 +26,7 @@ function Services() {
   const [editService, setEditService] = useState(null);
 
   const fetchServices = () => {
-    axios.get('https://rividco.vercel.app/api/services')
+    axios.get('https://rivid-six.vercel.app/api/services')
       .then(response => {
         setServices(response.data);
       })
@@ -63,7 +63,7 @@ function Services() {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`https://rividco.vercel.app/api/services/${id}`)
+        axios.delete(`https://rivid-six.vercel.app/api/services/${id}`)
           .then(() => {
             fetchServices();
             Swal.fire(
