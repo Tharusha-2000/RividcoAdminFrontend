@@ -7,6 +7,8 @@ import AdminDashboard from './pages/AdminDashboard.jsx';
 import Projects from './pages/Projects.jsx';
 import Services from './pages/Services.jsx';
 import Employees from './pages/Employees.jsx';
+import Testimonials from './pages/Testimonials'; // Import your Testimonials page
+
 import Login from './pages/Login.jsx'; // Import the Login component
 
 function App() {
@@ -20,6 +22,7 @@ function App() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/services" element={<Services />} />
           <Route path="/employees" element={<Employees />} />
+          <Route path="/testimonials" element={<Testimonials />} />
         </Routes>
       </Box>
     </Box>
