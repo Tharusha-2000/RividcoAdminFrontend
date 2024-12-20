@@ -15,8 +15,7 @@ function App() {
       <CssBaseline />
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Routes>
-          <Route path="/" element={<Navigate to="/login" />} /> {/* Redirect to login page */}
-          <Route path="/login" element={<Login />} /> {/* Login page */}
+          <Route path="/" element={<Login />} /> {/* Login page */}
           <Route path="/dashboard" element={<AdminDashboard />} /> {/* Dashboard page */}
           <Route path="/projects" element={<Projects />} />
           <Route path="/services" element={<Services />} />

@@ -6,6 +6,8 @@ import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png'; // Replace with your logo path
 import loginImage from '../assets/login-image.jpg'; // Replace with your login image path
+import config from '../config'; // Import the configuration file
+
 
 const Container = styled.div`
   width: 100%;
@@ -57,7 +59,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:8080/api/login', { email, password });
+      const response = await axios.post(`${config.baseUrl}/api/login`, { email, password });
 
       if (response.data.success) {
         Swal.fire({

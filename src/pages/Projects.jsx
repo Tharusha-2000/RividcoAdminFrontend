@@ -18,6 +18,8 @@ import AddProjectForm from '../components/AddProjectForm.jsx';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import Box from '@mui/material/Box';
+import config from '../config'; // Import the configuration file
+
 
 function Projects() {
   const [projects, setProjects] = useState([]);
@@ -26,7 +28,7 @@ function Projects() {
   const [editProject, setEditProject] = useState(null);
 
   const fetchProjects = () => {
-    axios.get('https://rividco.vercel.app/api/projects')
+    axios.get(`${config.baseUrl}/api/projects`)
       .then(response => {
         setProjects(response.data);
       })
@@ -63,7 +65,7 @@ function Projects() {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`https://rividco.vercel.app/api/projects/${id}`)
+        axios.delete(`${config.baseUrl}/api/projects/${id}`)
           .then(() => {
             fetchProjects();
             Swal.fire(

@@ -7,6 +7,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
 import { storage } from '../firebase';
+import config from '../config'; // Import the configuration file
+
 
 const AddEmployeeForm = ({ onEmployeeAdded, onEmployeeUpdated, editEmployee }) => {
   const [name, setName] = useState('');
@@ -103,7 +105,7 @@ const AddEmployeeForm = ({ onEmployeeAdded, onEmployeeUpdated, editEmployee }) =
       };
 
       if (editEmployee) {
-        axios.put(`https://rividco.vercel.app/api/employees/${editEmployee._id}`, newEmployee)
+        axios.put(`${config.baseUrl}/api/employees/${editEmployee._id}`, newEmployee)
           .then(response => {
             onEmployeeUpdated(response.data);
             Swal.fire({
@@ -121,14 +123,14 @@ const AddEmployeeForm = ({ onEmployeeAdded, onEmployeeUpdated, editEmployee }) =
             });
           });
       } else {
-        axios.post('https://rividco.vercel.app/api/employees', newEmployee)
-          .then(response => {
-            onEmployeeAdded(response.data);
-            Swal.fire({
-              icon: 'success',
-              title: 'Employee Added',
-              text: 'The employee has been added successfully!',
-            });
+        axios.post(`${config.baseUrl}/api/employees`, newEmployee)
+        .then(response => {
+          onEmployeeAdded(response.data);
+          Swal.fire({
+            icon: 'success',
+            title: 'Employee Added',
+            text: 'The employee has been added successfully!',
+          });
           })
           .catch(error => {
             console.error('There was an error adding the employee!', error);

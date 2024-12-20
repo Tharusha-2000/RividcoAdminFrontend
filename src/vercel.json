@@ -1,11 +1,6 @@
 {
-    "build": {
-      "env": {
-        "NODE_ENV": "development"
-      }
-    },
-    
-  "rewrites":[
+  
+ "rewrites":[
      {"source":"/(.*)","destination":"/"}
    ]
 
