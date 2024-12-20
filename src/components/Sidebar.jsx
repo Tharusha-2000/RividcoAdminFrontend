@@ -12,6 +12,8 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import Box from '@mui/material/Box';
 import logo from '../assets/logo.png';
 import PeopleIcon from '@mui/icons-material/People';
+import CommentIcon from '@mui/icons-material/Comment'; 
+
 
 const Sidebar = () => {
   return (
@@ -46,11 +48,17 @@ const Sidebar = () => {
           <ListItemText primary="Services" />
         </ListItem>
         <ListItem button component={Link} to="/employees" sx={{ '&:hover': { backgroundColor: '#e0e0e0' }, color: '#333' }}>
-  <ListItemIcon sx={{ color: '#333' }}>
-    <PeopleIcon />
-  </ListItemIcon>
-  <ListItemText primary="Employees" />
-</ListItem>
+          <ListItemIcon sx={{ color: '#333' }}>
+            <PeopleIcon />
+          </ListItemIcon>
+          <ListItemText primary="Employees" />
+      </ListItem>
+        <ListItem button component={Link} to="/testimonials" sx={{ '&:hover': { backgroundColor: '#e0e0e0' }, color: '#333' }}>
+            <ListItemIcon sx={{ color: '#333' }}>
+              <CommentIcon />
+            </ListItemIcon>
+            <ListItemText primary="Testimonials" />
+        </ListItem>
       </List>
     </Drawer>
   );
