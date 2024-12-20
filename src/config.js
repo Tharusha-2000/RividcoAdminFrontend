@@ -1,5 +1,5 @@
 const config = {
-  baseUrl: 'http://localhost:8000', // Replace with your actual base URL
+  baseUrl: 'https://rividco-mjzi.vercel.app', // Replace with your actual base URL
 };
 
 export default config;
