@@ -13,6 +13,10 @@ import Box from '@mui/material/Box';
 import logo from '../assets/logo.png';
 import PeopleIcon from '@mui/icons-material/People';
 import CommentIcon from '@mui/icons-material/Comment'; 
+import ContactMailIcon from '@mui/icons-material/ContactMail';
+import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
+
+
 
 
 const Sidebar = () => {
@@ -58,6 +62,18 @@ const Sidebar = () => {
               <CommentIcon />
             </ListItemIcon>
             <ListItemText primary="Testimonials" />
+        </ListItem>
+        <ListItem button component={Link} to="/contacts">
+          <ListItemIcon>
+            <ContactMailIcon />
+          </ListItemIcon>
+          <ListItemText primary="Contact Requests" />
+        </ListItem>
+        <ListItem button component={Link} to="/quotes">
+          <ListItemIcon>
+            <FormatQuoteIcon />
+          </ListItemIcon>
+          <ListItemText primary="Quote Requests" />
         </ListItem>
       </List>
     </Drawer>
