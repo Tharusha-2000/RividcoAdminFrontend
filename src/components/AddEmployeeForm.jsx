@@ -103,7 +103,7 @@ const AddEmployeeForm = ({ onEmployeeAdded, onEmployeeUpdated, editEmployee }) =
       };
 
       if (editEmployee) {
-        axios.put(`https://rividco.vercel.app/api/employees/${editEmployee._id}`, newEmployee)
+        axios.put(`https://rivid-six.vercel.app/api/employees/${editEmployee._id}`, newEmployee)
           .then(response => {
             onEmployeeUpdated(response.data);
             Swal.fire({
@@ -121,7 +121,7 @@ const AddEmployeeForm = ({ onEmployeeAdded, onEmployeeUpdated, editEmployee }) =
             });
           });
       } else {
-        axios.post('https://rividco.vercel.app/api/employees', newEmployee)
+        axios.post('https://rivid-six.vercel.app/api/employees', newEmployee)
           .then(response => {
             onEmployeeAdded(response.data);
             Swal.fire({
