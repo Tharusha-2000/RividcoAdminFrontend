@@ -63,13 +63,13 @@ const Sidebar = () => {
             </ListItemIcon>
             <ListItemText primary="Testimonials" />
         </ListItem>
-        <ListItem button component={Link} to="/contacts">
+        <ListItem button component={Link} to="/contacts" sx={{ '&:hover': { backgroundColor: '#e0e0e0' }, color: '#333' }}>
           <ListItemIcon>
             <ContactMailIcon />
           </ListItemIcon>
           <ListItemText primary="Contact Requests" />
         </ListItem>
-        <ListItem button component={Link} to="/quotes">
+        <ListItem button component={Link} to="/quotes" sx={{ '&:hover': { backgroundColor: '#e0e0e0' }, color: '#333' }}>
           <ListItemIcon>
             <FormatQuoteIcon />
           </ListItemIcon>
