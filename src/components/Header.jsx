@@ -42,12 +42,7 @@ const Header = () => {
           </Typography>
         </Box>
 
-        {/* Notifications */}
-        <IconButton size="large" aria-label="show new notifications" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
+       
 
         {/* Settings */}
         <IconButton size="large" aria-label="settings" color="inherit">
