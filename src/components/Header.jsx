@@ -42,13 +42,6 @@ const Header = () => {
           </Typography>
         </Box>
 
-       
-
-        {/* Settings */}
-        <IconButton size="large" aria-label="settings" color="inherit">
-          <SettingsIcon />
-        </IconButton>
-
         {/* Logout */}
         <IconButton
           size="large"
